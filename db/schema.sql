@@ -1,0 +1,27 @@
+USE testdb;
+
+CREATE TABLE IF NOT EXISTS member (
+  userid VARCHAR(255) NOT NULL PRIMARY KEY,
+  password VARCHAR(255) NOT NULL,
+  username VARCHAR(255) NOT NULL,
+  role VARCHAR(255) NOT NULL DEFAULT 'USER'
+);
+
+CREATE TABLE IF NOT EXISTS account (
+  id BIGINT AUTO_INCREMENT PRIMARY KEY,
+  account_number VARCHAR(20) NOT NULL,
+  owner_name VARCHAR(50) NOT NULL,
+  balance BIGINT DEFAULT 0
+);
+
+CREATE TABLE IF NOT EXISTS `transaction` (
+  id BIGINT AUTO_INCREMENT PRIMARY KEY,
+  account_id BIGINT NOT NULL,
+  type VARCHAR(10) NOT NULL,
+  amount BIGINT NOT NULL,
+  balance_after BIGINT NOT NULL,
+  created_at DATETIME DEFAULT NOW()
+);
+
+INSERT INTO account (account_number, owner_name, balance)
+VALUES ('123-456-789', 'Demo User', 1000000);
