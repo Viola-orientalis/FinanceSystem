@@ -1,0 +1,99 @@
+     # 02-mysql.yaml 
+  
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mysql-secret
+  namespace: todo
+type: Opaque
+stringData:
+  MYSQL_ROOT_PASSWORD: "1234"
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mysql-pv-node1
+spec:
+  capacity:
+    storage: 2Gi
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: manual
+  persistentVolumeReclaimPolicy: Retain
+  local:
+    path: /data/mysql
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+                - node1
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mysql-pvc
+  namespace: todo
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: manual
+  resources:
+    requests:
+      storage: 2Gi
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-service
+  namespace: todo
+spec:
+  selector:
+    app: mysql
+  ports:
+    - port: 3306
+      targetPort: 3306
+  type: ClusterIP
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql
+  namespace: todo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      nodeName: node1
+      containers:
+        - name: mysql
+          image: mysql:8.3
+          ports:
+            - containerPort: 3306
+          env:
+            - name: MYSQL_DATABASE
+              value: testdb
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: MYSQL_ROOT_PASSWORD
+          volumeMounts:
+            - name: mysql-storage
+              mountPath: /var/lib/mysql
+      volumes:
+        - name: mysql-storage
+          persistentVolumeClaim:
+            claimName: mysql-pvc
