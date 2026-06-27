@@ -1,24 +1,26 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-      lang="en">
-<head>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head(title)">
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${title}">Finance Banking Demo</title>
+    <!-- Server-side only link -->
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
 <body>
-  <div th:fragment="header">
-<!-- 인증 안된 경우 -->
-   <span sec:authorize="isAnonymous()">
-    <a th:href="@{/login}">로그인</a>
-    <a th:href="@{/signup}">회원가입</a>
-   </span>
-<!-- 인증 된 경우 -->
-      <span sec:authorize="isAuthenticated()">
-      <a th:href="@{/logout}">로그아웃</a>
-      <a th:href="@{/todo-list}">Todo</a>
-      </span>
-  </div>
-
+    <div th:fragment="alerts" id="alert-container">
+        <div th:if="${error}" class="alert error" onclick="this.remove()">
+            <div class="alert-title">ERROR</div>
+            <div class="alert-message" th:text="${error}">에러 메시지</div>
+        </div>
+        <div th:if="${message}" class="alert success" onclick="this.remove()">
+            <div class="alert-title">SUCCESS</div>
+            <div class="alert-message" th:text="${message}">성공 메시지</div>
+        </div>
+        <div th:if="${warning}" class="alert warning" onclick="this.remove()">
+            <div class="alert-title">SYSTEM</div>
+            <div class="alert-message" th:text="${warning}">경고 메시지</div>
+        </div>
+    </div>
 </body>
 </html>

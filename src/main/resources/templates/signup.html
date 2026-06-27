@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{include/header :: head('파이낸스 뱅킹 - 회원가입')}"></head>
+<body>
+    <div th:replace="~{include/header :: alerts}"></div>
+    
+    <div class="container">
+        <div class="panel">
+            <h1 class="text-center">회원가입</h1>
+            
+            <form action="/signup" method="post">
+                <div class="form-group">
+                    <label for="userId">아이디</label>
+                    <input type="text" id="userId" name="userId" placeholder="아이디 입력" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">비밀번호</label>
+                    <input type="password" id="password" name="password" placeholder="비밀번호 입력" required>
+                </div>
+                <div class="form-group">
+                    <label for="username">이름</label>
+                    <input type="text" id="username" name="username" placeholder="이름 입력" required>
+                </div>
+                
+                <button type="submit" class="mb-1">계좌 생성 및 회원가입</button>
+                <a th:href="@{/login}" class="btn secondary">취소</a>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
