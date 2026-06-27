@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{include/header :: head('파이낸스 뱅킹 - 계좌조회')}"></head>
+<body>
+    <div th:replace="~{include/header :: alerts}"></div>
+    
+    <div class="container">
+        <div class="panel">
+            <h1 class="text-center">계좌 상세 정보</h1>
+            
+            <div class="data-card">
+                <div class="data-label">계좌번호</div>
+                <div class="data-value mb-1" th:text="${account.accountNumber}">-</div>
+                
+                <div class="data-label">예금주</div>
+                <div class="data-value mb-1" th:text="${account.ownerName}">-</div>
+                
+                <div class="data-label">잔액</div>
+                <div class="data-value val-positive" th:text="${#numbers.formatInteger(account.balance, 0, 'COMMA')} + ' 원'">0 원</div>
+            </div>
+            
+            <a th:href="@{/home}" class="btn secondary mt-2">홈으로 돌아가기</a>
+        </div>
+    </div>
+</body>
+</html>
