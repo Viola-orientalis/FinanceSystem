@@ -12,7 +12,7 @@ import java.util.Map;
 
 public class LoginController {
 
-    @GetMapping("/login")
+    @GetMapping({"/","/login"})
     public String loginForm() {
         return "loginForm";
     }
