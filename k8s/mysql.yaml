@@ -15,6 +15,6 @@ metadata:
   namespace: FS
 subsets:
   - addresses:
-      - ip: 172.16.8.30
+      - ip: 172.16.8.20
     ports:
       - port: 3306
