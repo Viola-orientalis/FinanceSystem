@@ -22,10 +22,19 @@ public class SecurityConfig {
         //어떤 요청을 인증/비인증해야 되는지 설정
         http.authorizeHttpRequests(authorize ->
                         authorize
-                                .requestMatchers("/","/home","/signup","/login").permitAll()
+                                // /home은 로그인 후 메인화면이므로 permitAll에서 제외
+                                .requestMatchers(
+                                        "/",
+                                        "/signup",
+                                        "/login",
+                                        "/css/**",
+                                        "/error",
+                                        "/js/**",
+                                        "/images/**"
+                                ).permitAll()
 //                                .requestMatchers("/","/home","/signup","/login").hasRole("USER").permitAll()
-                        .anyRequest().authenticated()
-                );
+                                .anyRequest().authenticated()
+        );
 
         // 인증하기 위한 로그인 화면 구성하기
         http.formLogin(form ->
@@ -47,25 +56,26 @@ public class SecurityConfig {
                         //.successForwardUrl("/home")  // forward 요청
                         // true로 지정하면 이전에 가고자하는 경로가 아닌 /home으로 무조건 감.
                         .defaultSuccessUrl("/home", true) //redirect
-                       //failureForwardUrl()  // forward 요청
+                        //failureForwardUrl()  // forward 요청
                         // error=true 파라미터는 LoginForm.html에서 사용됨
                         .failureUrl("/login?error=true")
                         .permitAll());
-                      // 거의 대부분의 요청을 redirect로 처리함( PRG 패턴 )
+        // 거의 대부분의 요청을 redirect로 처리함( PRG 패턴 )
 
-          // 로그아웃 설정
-          http.logout(logout ->
-                  logout
-                          // logout를 처리할 떄 사용하는 url경로지정
-                          .logoutUrl("/logout")
-                          .logoutSuccessUrl("/home")
-                          .invalidateHttpSession(true) // session.invalidate() 동ㅇㄹ
-                          .deleteCookies("JSESSIONID")  // 클라이언트에 남아있는 쿠키삭제
-                          .permitAll());
+        // 로그아웃 설정
+        http.logout(logout ->
+                logout
+                        // logout를 처리할 떄 사용하는 url경로지정
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/login?logout")
+                        .invalidateHttpSession(true) // session.invalidate() 동ㅇㄹ
+                        .deleteCookies("JSESSIONID")  // 클라이언트에 남아있는 쿠키삭제
+                        .permitAll());
 
 
         return http.build(); // 빌더패턴
     }
+
     // 암호화할 때 사용하는 빈
     @Bean
     public PasswordEncoder passwordEncoder() {
