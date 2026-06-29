@@ -39,18 +39,18 @@ kubectl delete pv mysql-nfs-pv
 
 ### 2. 배포 확인
 ```bash
-# Spring Boot Pod 확인 (finance-app 네임스페이스)
-kubectl get pods -o wide -n finance-app
+# Spring Boot Pod 확인 (todo-app 네임스페이스)
+kubectl get pods -o wide -n todo-app
 
-# MySQL Pod 확인 (finance-db 네임스페이스)
-kubectl get pods -o wide -n finance-db
+# MySQL Pod 확인 (todo-db 네임스페이스)
+kubectl get pods -o wide -n todo-db
 
 # HPA 상태 확인
-kubectl get hpa -n finance-app
+kubectl get hpa -n todo-app
 
 # 전체 서비스 확인
-kubectl get svc -n finance-app
-kubectl get svc -n finance-db
+kubectl get svc -n todo-app
+kubectl get svc -n todo-db
 ```
 
 ### 3. 접속
@@ -70,10 +70,10 @@ http://finance.local
 
 ```bash
 # 터미널 1: Pod 실시간 감시 (어느 노드에 뜨는지 확인)
-kubectl get pods -o wide -n finance-app -w
+kubectl get pods -o wide -n todo-app -w
 
 # 터미널 2: HPA 실시간 감시
-kubectl get hpa -n finance-app -w
+kubectl get hpa -n todo-app -w
 
 # 터미널 3: k6 부하 테스트 실행
 k6 run tests/load/hpa-rampup.js
@@ -92,7 +92,7 @@ k6 run tests/load/hpa-rampup.js
 - 확인 방법:
 ```bash
 # MySQL Pod에 접속하여 데이터 확인
-kubectl exec -it -n finance-db $(kubectl get pod -n finance-db -o name) -- mysql -uroot -p1234 testdb -e "SELECT COUNT(*) FROM transactions;"
+kubectl exec -it -n todo-db $(kubectl get pod -n todo-db -o name) -- mysql -uroot -p1234 testdb -e "SELECT COUNT(*) FROM transactions;"
 ```
 
 ---
@@ -101,12 +101,12 @@ kubectl exec -it -n finance-db $(kubectl get pod -n finance-db -o name) -- mysql
 
 | 파일 | 내용 |
 |---|---|
-| `01-namespace.yaml` | finance-app, finance-db 네임스페이스 생성 |
+| `01-namespace.yaml` | todo-app, todo-db 네임스페이스 생성 |
 | `02-mysql.yaml` | Secret, PV/PVC, Service, Deployment (MySQL) |
 | `03-springboot.yaml` | ConfigMap, Secret, Service(NodePort), Deployment (Spring Boot) |
 | `04-hpa.yaml` | CPU 50% 기준 오토스케일링 (1~5 Pods) |
 | `05-ingress.yaml` | Ingress (finance.local → springboot-service:8080) |
-| `networkpolicy.yaml` | finance-app → finance-db 3306 포트만 허용 |
+| `networkpolicy.yaml` | todo-app → todo-db 3306 포트만 허용 |
 
 ---
 
