@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{include/header :: head('파이낸스 뱅킹 - 거래내역')}"></head>
+<body>
+    <div th:replace="~{include/header :: alerts}"></div>
+
+    <div class="container container-wide">
+        <div class="panel">
+            <h1 class="text-center">거래 내역</h1>
+            
+            <div style="overflow-x: auto;">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>거래유형</th>
+                            <th>금액</th>
+                            <th>거래 전</th>
+                            <th>거래 후</th>
+                            <th>거래일시</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="tx : ${transactions}">
+                            <td>
+                                <span th:if="${tx.type == 'DEPOSIT'}" class="val-positive">입금</span>
+                                <span th:if="${tx.type == 'WITHDRAW'}" class="val-negative">출금</span>
+                            </td>
+                            <td>
+                                <span th:if="${tx.type == 'DEPOSIT'}" class="val-positive" th:text="'+' + ${#numbers.formatInteger(tx.amount, 0, 'COMMA')}"></span>
+                                <span th:if="${tx.type == 'WITHDRAW'}" class="val-negative" th:text="'-' + ${#numbers.formatInteger(tx.amount, 0, 'COMMA')}"></span>
+                            </td>
+                            <td th:text="${#numbers.formatInteger(tx.balanceBefore, 0, 'COMMA')}">-</td>
+                            <td th:text="${#numbers.formatInteger(tx.balanceAfter, 0, 'COMMA')}">-</td>
+                            <td style="color: var(--slate);" th:text="${#temporals.format(tx.createdAt, 'yyyy-MM-dd HH:mm')}">-</td>
+                        </tr>
+                        <tr th:if="${#lists.isEmpty(transactions)}">
+                            <td colspan="5" class="text-center" style="color: var(--slate);">거래 내역이 없습니다.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <a th:href="@{/home}" class="btn secondary mt-2">홈으로 돌아가기</a>
+        </div>
+    </div>
+</body>
+</html>
