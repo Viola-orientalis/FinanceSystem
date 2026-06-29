@@ -47,7 +47,7 @@ spec:
     spec:
       containers:
         - name: springboot
-          image: cheongomabi/todo-springboot:2.0
+          image: cheongomabi/todo-springboot:3.0
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
