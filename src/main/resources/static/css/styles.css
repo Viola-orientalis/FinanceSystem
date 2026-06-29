@@ -1,0 +1,364 @@
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+
+:root {
+    /* Brand & Accent */
+    --primary: #17171c;
+    /* Near-Black Primary */
+    --cohere-black: #000000;
+    --deep-green: #003c33;
+    --action-blue: #1863dc;
+    --coral: #ff7759;
+
+    /* Surface & Background */
+    --canvas: #ffffff;
+    --soft-stone: #eeece7;
+    --card-border: #f2f2f2;
+    --hairline: #d9d9dd;
+
+    /* Text */
+    --ink: #212121;
+    --slate: #75758a;
+    --muted: #93939f;
+    --on-primary: #ffffff;
+    --on-dark: #ffffff;
+
+    /* Semantic */
+    --error: #b30000;
+    --success: #003c33;
+    /* Using deep green for success */
+    --warning: #ff7759;
+    /* Using coral for warning */
+
+    /* Radii */
+    --radius-xs: 4px;
+    --radius-sm: 8px;
+    --radius-md: 16px;
+    --radius-lg: 22px;
+    --radius-pill: 32px;
+
+    /* Spacing */
+    --space-md: 12px;
+    --space-lg: 16px;
+    --space-xl: 24px;
+    --space-xxl: 32px;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Pretendard', "Unica77 Cohere Web", Inter, Arial, ui-sans-serif, system-ui, sans-serif;
+    background-color: var(--canvas);
+    color: var(--ink);
+    line-height: 1.5;
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+h1,
+h2,
+h3 {
+    font-family: 'Pretendard', "CohereText", "Space Grotesk", Inter, ui-sans-serif, system-ui, sans-serif;
+    color: var(--ink);
+    margin-bottom: var(--space-lg);
+    line-height: 1;
+    letter-spacing: -1.2px;
+    font-weight: 700;
+}
+
+h1 {
+    font-size: 60px;
+    /* Section Display */
+}
+
+h2 {
+    font-size: 48px;
+    /* Section Heading */
+    letter-spacing: -0.48px;
+}
+
+a {
+    color: var(--action-blue);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.mb-1 {
+    margin-bottom: var(--space-lg);
+}
+
+.mb-2 {
+    margin-bottom: var(--space-xxl);
+}
+
+.mt-1 {
+    margin-top: var(--space-lg);
+}
+
+.mt-2 {
+    margin-top: var(--space-xxl);
+}
+
+.d-flex {
+    display: flex;
+}
+
+.flex-column {
+    flex-direction: column;
+}
+
+.gap-1 {
+    gap: var(--space-lg);
+}
+
+/* Layout Containers */
+.container {
+    width: 100%;
+    max-width: 480px;
+    padding: var(--space-xl);
+}
+
+.container-wide {
+    max-width: 800px;
+}
+
+/* Card Panel - Flat, no shadows, soft stone or white with border */
+.panel {
+    background-color: var(--canvas);
+    border: 1px solid var(--hairline);
+    border-radius: var(--radius-lg);
+    padding: 40px var(--space-xxl);
+}
+
+.panel-dark {
+    background-color: var(--deep-green);
+    color: var(--on-dark);
+    border: none;
+}
+
+.panel-dark h1,
+.panel-dark h2,
+.panel-dark p,
+.panel-dark .data-label {
+    color: var(--on-dark);
+}
+
+/* Forms */
+.form-group {
+    margin-bottom: var(--space-xl);
+}
+
+.form-group label {
+    display: block;
+    font-family: 'Pretendard', "CohereMono", Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: var(--space-md);
+    color: var(--slate);
+    letter-spacing: 0.28px;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="number"] {
+    width: 100%;
+    padding: 16px;
+    background-color: var(--canvas);
+    border: 1px solid var(--hairline);
+    border-radius: var(--radius-sm);
+    color: var(--ink);
+    font-size: 16px;
+    font-family: inherit;
+    transition: border-color 0.2s;
+}
+
+input:focus {
+    outline: none;
+    border-color: #9b60aa;
+    /* Form Focus Violet */
+}
+
+/* Buttons */
+.btn,
+button {
+    display: inline-block;
+    width: 100%;
+    padding: 14px 24px;
+    background-color: var(--primary);
+    color: var(--on-primary);
+    border: none;
+    border-radius: var(--radius-pill);
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.2s;
+    font-family: 'Pretendard', sans-serif;
+}
+
+.btn:hover,
+button:hover {
+    background-color: var(--cohere-black);
+    text-decoration: none;
+}
+
+.btn.secondary {
+    background-color: transparent;
+    color: var(--ink);
+    border: 1px solid var(--hairline);
+}
+
+.btn.secondary:hover {
+    background-color: var(--soft-stone);
+}
+
+.btn.danger {
+    background-color: transparent;
+    color: var(--error);
+    border: 1px solid var(--error);
+}
+
+.btn.danger:hover {
+    background-color: #fff0f0;
+}
+
+/* Data Display */
+.data-card {
+    background-color: var(--soft-stone);
+    padding: var(--space-xl);
+    border-radius: var(--radius-sm);
+    margin-bottom: var(--space-xl);
+}
+
+.data-label {
+    font-family: 'Pretendard', "CohereMono", Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--slate);
+    margin-bottom: 4px;
+    letter-spacing: 0.28px;
+}
+
+.data-value {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--ink);
+}
+
+.val-positive {
+    color: var(--deep-green);
+}
+
+.val-negative {
+    color: var(--error);
+}
+
+/* Tables */
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: var(--space-xl);
+}
+
+.data-table th,
+.data-table td {
+    padding: 16px;
+    text-align: left;
+    border-bottom: 1px solid var(--hairline);
+}
+
+.data-table th {
+    font-family: 'Pretendard', "CohereMono", Arial, sans-serif;
+    font-size: 14px;
+    color: var(--slate);
+    font-weight: 600;
+}
+
+.data-table tr:hover td {
+    background-color: var(--soft-stone);
+}
+
+/* Alerts (Toast) */
+#alert-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.alert {
+    background-color: var(--canvas);
+    border: 1px solid var(--hairline);
+    border-radius: var(--radius-sm);
+    padding: 16px 24px;
+    min-width: 300px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    /* Minimal shadow for floating elements */
+    animation: slideIn 0.3s ease-out;
+}
+
+.alert.error {
+    border-left: 4px solid var(--error);
+}
+
+.alert.success {
+    border-left: 4px solid var(--success);
+}
+
+.alert.warning {
+    border-left: 4px solid var(--warning);
+}
+
+.alert-title {
+    font-family: 'Pretendard', "CohereMono", Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.alert.error .alert-title {
+    color: var(--error);
+}
+
+.alert.success .alert-title {
+    color: var(--success);
+}
+
+.alert.warning .alert-title {
+    color: var(--warning);
+}
+
+.alert-message {
+    font-size: 14px;
+    color: var(--ink);
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}

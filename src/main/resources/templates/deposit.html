@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{include/header :: head('파이낸스 뱅킹 - 입금')}"></head>
+<body>
+    <div th:replace="~{include/header :: alerts}"></div>
+    
+    <div class="container">
+        <div class="panel">
+            <h1 class="text-center">입금하기</h1>
+            
+            <form action="/deposit" method="post">
+                <div class="form-group">
+                    <label for="amount">입금할 금액 (원)</label>
+                    <input type="number" id="amount" name="amount" placeholder="0" required min="1">
+                </div>
+                
+                <button type="submit" class="mb-2">입금 실행</button>
+            </form>
+            
+            <div th:if="${account != null}">
+                <div class="data-card text-center">
+                    <div class="data-label">입금 후 잔액</div>
+                    <div class="data-value val-positive" th:text="${#numbers.formatInteger(account.balance, 0, 'COMMA')} + ' 원'">-</div>
+                </div>
+            </div>
+            
+            <a th:href="@{/home}" class="btn secondary mt-1">홈으로 돌아가기</a>
+        </div>
+    </div>
+</body>
+</html>

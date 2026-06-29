@@ -1,14 +1,29 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<h1>Home</h1>
-<div th:replace="~{ include/header :: header}"></div>
-<hr>
-<div th:replace="~{ include/home :: content}"></div>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
+<head th:replace="~{include/header :: head('파이낸스 뱅킹 - 메인')}"></head>
+
+<body>
+    <div th:replace="~{include/header :: alerts}"></div>
+
+    <div class="container container-wide">
+        <div class="panel panel-dark mb-2 text-center">
+            <h1>파이낸스 콘솔</h1>
+        </div>
+
+        <div class="panel text-center">
+            <div class="d-flex flex-column gap-1 mb-2">
+                <a th:href="@{/account}" class="btn">계좌 상세 조회</a>
+                <a th:href="@{/deposit}" class="btn secondary">입금</a>
+                <a th:href="@{/withdraw}" class="btn secondary">출금</a>
+                <a th:href="@{/transactions}" class="btn secondary">거래 내역</a>
+            </div>
+
+            <form action="/logout" method="post" class="mt-2">
+                <button type="submit" class="btn danger">로그아웃</button>
+            </form>
+        </div>
+    </div>
 </body>
+
 </html>
