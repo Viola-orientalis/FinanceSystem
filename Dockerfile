@@ -7,9 +7,7 @@ WORKDIR /app
 
 COPY . .
 
-RUN chmod +x gradlew
-
-RUN ./gradlew clean bootJar --no-daemon
+RUN gradle clean bootJar --no-daemon
 
 
 # =========================

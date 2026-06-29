@@ -12,7 +12,8 @@
         type,
         amount,
         balance_before,
-        balance_after
+        balance_after,
+        created_at
         )
         values
         (
@@ -20,7 +21,8 @@
         #{type},
         #{amount},
         #{balanceBefore},
-        #{balanceAfter}
+        #{balanceAfter},
+        #{createdAt}
         )
     </insert>
 
