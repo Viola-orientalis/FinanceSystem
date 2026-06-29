@@ -2,11 +2,11 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: finance-app
+  name: todo-app
 ---
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: finance-db
+  name: todo-db
   labels:
     access-to-db: allowed
