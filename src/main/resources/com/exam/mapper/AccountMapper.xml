@@ -8,40 +8,40 @@
     <insert id="createAccount">
         insert into account
         (
-        userid,
+        user_id,
         account_number,
-        owner_name,
         balance
         )
         values
         (
         #{userid},
         #{accountNumber},
-        #{ownerName},
         0
         )
     </insert>
 
     <select id="findByUserid" parameterType="string" resultType="AccountDTO">
         select
-        id,
-        userid,
-        account_number as accountNumber,
-        owner_name as ownerName,
-        balance
-        from account
-        where userid = #{userid}
+        a.id,
+        a.user_id as userid,
+        a.account_number as accountNumber,
+        m.username as ownerName,
+        a.balance
+        from account a
+        join member m on a.user_id = m.userid
+        where a.user_id = #{userid}
     </select>
 
     <select id="findByUseridForUpdate" parameterType="string" resultType="AccountDTO">
         select
-        id,
-        userid,
-        account_number as accountNumber,
-        owner_name as ownerName,
-        balance
-        from account
-        where userid = #{userid}
+        a.id,
+        a.user_id as userid,
+        a.account_number as accountNumber,
+        m.username as ownerName,
+        a.balance
+        from account a
+        join member m on a.user_id = m.userid
+        where a.user_id = #{userid}
         for update
     </select>
 
