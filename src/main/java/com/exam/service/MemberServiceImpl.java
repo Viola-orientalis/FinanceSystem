@@ -31,8 +31,7 @@ public class MemberServiceImpl implements MemberService {
 
         accountMapper.createAccount(
                 dto.getUserid(),
-                accountNumber,
-                dto.getUsername()
+                accountNumber
         );
 
         return accountNumber;

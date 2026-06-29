@@ -101,10 +101,10 @@ public class TransactionController {
 
         String userid = authentication.getName();
 
-        List<TransactionDTO> transactions =
+        List<TransactionDTO> transaction =
                 transactionService.findMyTransactions(userid);
 
-        model.addAttribute("transactions", transactions);
+        model.addAttribute("transactions", transaction);
 
         return "transactions";
     }
