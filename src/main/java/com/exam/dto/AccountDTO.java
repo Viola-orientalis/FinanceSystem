@@ -8,17 +8,17 @@ public class AccountDTO {
     private Long id;
     private String userid;
     private String accountNumber;
-    private String ownerName;
+    private String userName;
     private Long balance;
 
     public AccountDTO() {
     }
 
-    public AccountDTO(Long id, String userid, String accountNumber, String ownerName, Long balance) {
+    public AccountDTO(Long id, String userid, String accountNumber, String userName, Long balance) {
         this.id = id;
         this.userid = userid;
         this.accountNumber = accountNumber;
-        this.ownerName = ownerName;
+        this.userName = userName;
         this.balance = balance;
     }
 
@@ -47,11 +47,11 @@ public class AccountDTO {
     }
 
     public String getOwnerName() {
-        return ownerName;
+        return userName;
     }
 
     public void setOwnerName(String ownerName) {
-        this.ownerName = ownerName;
+        this.userName = ownerName;
     }
 
     public Long getBalance() {
@@ -68,7 +68,7 @@ public class AccountDTO {
                 "id=" + id +
                 ", userid='" + userid + '\'' +
                 ", accountNumber='" + accountNumber + '\'' +
-                ", ownerName='" + ownerName + '\'' +
+                ", ownerName='" + userName + '\'' +
                 ", balance=" + balance +
                 '}';
     }

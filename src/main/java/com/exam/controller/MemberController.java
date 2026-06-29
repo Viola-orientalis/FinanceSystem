@@ -56,7 +56,7 @@ public class MemberController {
             String accountNumber = memberService.signup(memberDTO);
 
             // 성공 메시지 달아서 로그인 페이지로 전달
-            redirectAttributes.addFlashAttribute("message", 
+            redirectAttributes.addFlashAttribute("message",
                     "회원가입 완료! 발급된 계좌번호: [" + accountNumber + "] 로그인 후 확인하세요.");
 
             return "redirect:/login";

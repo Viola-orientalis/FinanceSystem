@@ -52,19 +52,19 @@ spec:
     spec:
       containers:
         - name: springboot
-          image: cheongomabi/todo-springboot:3.0
+          image: cheongomabi/fs:2.0
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
           readinessProbe:
             httpGet:
-              path: /
+              path: /home
               port: 8080
             initialDelaySeconds: 15
             periodSeconds: 5
           livenessProbe:
             httpGet:
-              path: /
+              path: /home
               port: 8080
             initialDelaySeconds: 30
             periodSeconds: 10
