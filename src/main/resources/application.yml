@@ -27,7 +27,7 @@ spring:
         
 mybatis:
 #  mapper-locations: classpath:com/exam/mapper/TodoMapper.xml
-  mapper-locations: com/exam/mapper/TodoMapper.xml
+  mapper-locations: classpath:com/exam/mapper/*.xml
   type-aliases-package: com.exam.dto
   configuration:
     map-underscore-to-camel-case: true

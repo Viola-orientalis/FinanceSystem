@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.exam.mapper.AccountMapper">
+
+    <insert id="createAccount">
+        insert into account
+        (
+        userid,
+        account_number,
+        owner_name,
+        balance
+        )
+        values
+        (
+        #{userid},
+        #{accountNumber},
+        #{ownerName},
+        0
+        )
+    </insert>
+
+    <select id="findByUserid" parameterType="string" resultType="AccountDTO">
+        select
+        id,
+        userid,
+        account_number as accountNumber,
+        owner_name as ownerName,
+        balance
+        from account
+        where userid = #{userid}
+    </select>
+
+    <select id="findByUseridForUpdate" parameterType="string" resultType="AccountDTO">
+        select
+        id,
+        userid,
+        account_number as accountNumber,
+        owner_name as ownerName,
+        balance
+        from account
+        where userid = #{userid}
+        for update
+    </select>
+
+    <update id="updateBalance">
+        update account
+        set balance = #{balance}
+        where id = #{id}
+    </update>
+
+</mapper>
