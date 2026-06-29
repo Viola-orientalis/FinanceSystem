@@ -10,7 +10,7 @@ stringData:
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: mysql-nfs-pv
+  name: mlysql-nfs-pv
 spec:
   capacity:
     storage: 2Gi
@@ -19,7 +19,7 @@ spec:
   storageClassName: nfs-manual
   persistentVolumeReclaimPolicy: Retain
   nfs:
-    server: 172.168.8.20
+    server: 172.16.8.20
     path: /nfs/data/mysql
 ---
 apiVersion: v1
