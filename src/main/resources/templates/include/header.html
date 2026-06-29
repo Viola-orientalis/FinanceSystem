@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
 <head th:fragment="head(title)">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,20 +8,45 @@
     <!-- Server-side only link -->
     <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
+
 <body>
-    <div th:fragment="alerts" id="alert-container">
-        <div th:if="${error}" class="alert error" onclick="this.remove()">
-            <div class="alert-title">ERROR</div>
-            <div class="alert-message" th:text="${error}">에러 메시지</div>
+    <div th:fragment="alerts">
+        <!-- Error Modal -->
+        <div th:if="${error}" class="alert-overlay" id="error-modal">
+            <div class="alert-modal">
+                <div class="alert-title">[ 에러 ]</div>
+                <div class="alert-message" th:text="${error}">에러 메시지</div>
+                <div class="alert-action">
+                    <button type="button" class="btn-modal" onclick="document.getElementById('error-modal').remove()">[
+                        확인 ]</button>
+                </div>
+            </div>
         </div>
-        <div th:if="${message}" class="alert success" onclick="this.remove()">
-            <div class="alert-title">SUCCESS</div>
-            <div class="alert-message" th:text="${message}">성공 메시지</div>
+
+        <!-- Success Modal -->
+        <div th:if="${message}" class="alert-overlay" id="success-modal">
+            <div class="alert-modal">
+                <div class="alert-title">[ 알림 ]</div>
+                <div class="alert-message" th:text="${message}">성공 메시지</div>
+                <div class="alert-action">
+                    <button type="button" class="btn-modal"
+                        onclick="document.getElementById('success-modal').remove()">[ 확인 ]</button>
+                </div>
+            </div>
         </div>
-        <div th:if="${warning}" class="alert warning" onclick="this.remove()">
-            <div class="alert-title">SYSTEM</div>
-            <div class="alert-message" th:text="${warning}">경고 메시지</div>
+
+        <!-- Warning Modal -->
+        <div th:if="${warning}" class="alert-overlay" id="warning-modal">
+            <div class="alert-modal">
+                <div class="alert-title">[ 시스템 알림 ]</div>
+                <div class="alert-message" th:text="${warning}">경고 메시지</div>
+                <div class="alert-action">
+                    <button type="button" class="btn-modal"
+                        onclick="document.getElementById('warning-modal').remove()">[ 확인 ]</button>
+                </div>
+            </div>
         </div>
     </div>
 </body>
+
 </html>

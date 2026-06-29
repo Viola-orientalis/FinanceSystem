@@ -292,73 +292,90 @@ button:hover {
     background-color: var(--soft-stone);
 }
 
-/* Alerts (Toast) */
-#alert-container {
+/* Modal Alerts */
+.alert-overlay {
     position: fixed;
-    top: 20px;
-    right: 20px;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.65);
+    /* Dark background */
     z-index: 9999;
     display: flex;
-    flex-direction: column;
-    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.2s ease-out;
 }
 
-.alert {
+.alert-modal {
     background-color: var(--canvas);
-    border: 1px solid var(--hairline);
-    border-radius: var(--radius-sm);
-    padding: 16px 24px;
-    min-width: 300px;
-    cursor: pointer;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-    /* Minimal shadow for floating elements */
-    animation: slideIn 0.3s ease-out;
-}
-
-.alert.error {
-    border-left: 4px solid var(--error);
-}
-
-.alert.success {
-    border-left: 4px solid var(--success);
-}
-
-.alert.warning {
-    border-left: 4px solid var(--warning);
+    border: 1px solid var(--ink);
+    /* Sharp, bold border to match the wireframe */
+    padding: var(--space-xl) var(--space-xl) var(--space-lg);
+    width: 90%;
+    max-width: 380px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+    animation: scaleIn 0.2s ease-out;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
 }
 
 .alert-title {
-    font-family: 'Pretendard', "CohereMono", Arial, sans-serif;
-    font-size: 14px;
     font-weight: 700;
-    margin-bottom: 4px;
-}
-
-.alert.error .alert-title {
-    color: var(--error);
-}
-
-.alert.success .alert-title {
-    color: var(--success);
-}
-
-.alert.warning .alert-title {
-    color: var(--warning);
+    font-size: 16px;
+    color: var(--ink);
+    margin-bottom: var(--space-md);
 }
 
 .alert-message {
-    font-size: 14px;
+    font-size: 15px;
     color: var(--ink);
+    line-height: 1.6;
+    margin-bottom: var(--space-lg);
 }
 
-@keyframes slideIn {
+.alert-action {
+    text-align: center;
+    /* Center align button as requested */
+    margin-top: auto;
+}
+
+.btn-modal {
+    background: none;
+    border: none;
+    color: var(--ink);
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    padding: 0;
+    transition: opacity 0.2s;
+    font-family: inherit;
+}
+
+.btn-modal:hover {
+    opacity: 0.6;
+}
+
+@keyframes fadeIn {
     from {
-        transform: translateX(100%);
         opacity: 0;
     }
 
     to {
-        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        transform: scale(0.95);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
         opacity: 1;
     }
 }
