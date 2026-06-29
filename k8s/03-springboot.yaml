@@ -1,10 +1,26 @@
-#  03-springboot.yaml
-
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: springboot-config
+  namespace: todo-app
+data:
+  SPRING_DATASOURCE_URL: "jdbc:mysql://mysql-service.todo-db.svc.cluster.local:3306/testdb?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=Asia/Seoul"
+  SPRING_DATASOURCE_USERNAME: "root"
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: springboot-app-secret
+  namespace: todo-app
+type: Opaque
+stringData:
+  MYSQL_ROOT_PASSWORD: "1234"
+---
 apiVersion: v1
 kind: Service
 metadata:
   name: springboot-service
-  namespace: todo
+  namespace: todo-app
 spec:
   selector:
     app: springboot
@@ -18,7 +34,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: springboot
-  namespace: todo
+  namespace: todo-app
 spec:
   replicas: 1
   selector:
@@ -31,17 +47,23 @@ spec:
     spec:
       containers:
         - name: springboot
-          image: kyongyeolin/todo-springboot:1.0
+          image: cheongomabi/todo-springboot:2.0
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
           env:
             - name: SPRING_DATASOURCE_URL
-              value: jdbc:mysql://mysql-service:3306/testdb?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=Asia/Seoul
+              valueFrom:
+                configMapKeyRef:
+                  name: springboot-config
+                  key: SPRING_DATASOURCE_URL
             - name: SPRING_DATASOURCE_USERNAME
-              value: root
+              valueFrom:
+                configMapKeyRef:
+                  name: springboot-config
+                  key: SPRING_DATASOURCE_USERNAME
             - name: SPRING_DATASOURCE_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: mysql-secret
+                  name: springboot-app-secret
                   key: MYSQL_ROOT_PASSWORD
