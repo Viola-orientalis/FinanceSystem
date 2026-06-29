@@ -1,6 +1,11 @@
-# 01-namespace.yaml
-
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: todo
+  name: todo-app
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: todo-db
+  labels:
+    access-to-db: allowed
