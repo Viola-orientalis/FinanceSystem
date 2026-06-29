@@ -7,6 +7,7 @@ import com.exam.mapper.TransactionMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -47,6 +48,7 @@ public class TransactionServiceImpl implements TransactionService {
         transactionDTO.setAmount(amount);
         transactionDTO.setBalanceBefore(beforeBalance);
         transactionDTO.setBalanceAfter(afterBalance);
+        transactionDTO.setCreatedAt(LocalDateTime.now());
 
         transactionMapper.save(transactionDTO);
 
@@ -62,6 +64,11 @@ public class TransactionServiceImpl implements TransactionService {
 
         if (amount == null || amount <= 0) {
             throw new IllegalArgumentException("출금 금액은 1원 이상이어야 합니다.");
+        }
+
+        // 1회 최대 한도 제한 체크
+        if (amount > 1_000_000) {
+            throw new IllegalArgumentException("요청하신 금액이 한도를 초과했습니다 (1회 최대 한도: 1,000,000원)");
         }
 
         AccountDTO account = accountMapper.findByUseridForUpdate(userid);
@@ -86,6 +93,7 @@ public class TransactionServiceImpl implements TransactionService {
         transactionDTO.setAmount(amount);
         transactionDTO.setBalanceBefore(beforeBalance);
         transactionDTO.setBalanceAfter(afterBalance);
+        transactionDTO.setCreatedAt(LocalDateTime.now());
 
         transactionMapper.save(transactionDTO);
 

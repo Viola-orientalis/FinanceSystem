@@ -9,8 +9,7 @@ public interface AccountMapper {
 
     // 회원가입 시 계좌 생성
     public int createAccount(@Param("userid") String userid,
-                             @Param("accountNumber") String accountNumber,
-                             @Param("ownerName") String ownerName);
+                             @Param("accountNumber") String accountNumber);
 
     // 계좌 조회
     public AccountDTO findByUserid(String userid);
