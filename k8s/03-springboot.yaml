@@ -6,6 +6,7 @@ metadata:
 data:
   SPRING_DATASOURCE_URL: "jdbc:mysql://mysql-service.todo-db.svc.cluster.local:3306/testdb?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=Asia/Seoul"
   SPRING_DATASOURCE_USERNAME: "root"
+  SPRING_SQL_INIT_CONTINUE_ON_ERROR: "true"
 ---
 apiVersion: v1
 kind: Secret
@@ -36,7 +37,11 @@ metadata:
   name: springboot
   namespace: todo-app
 spec:
-  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
   selector:
     matchLabels:
       app: springboot
@@ -47,10 +52,30 @@ spec:
     spec:
       containers:
         - name: springboot
-          image: cheongomabi/todo-springboot:3.0
+          image: cheongomabi/fs:2.0
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: /home
+              port: 8080
+            initialDelaySeconds: 15
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /home
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            failureThreshold: 3
+          resources:
+            requests:
+              cpu: 250m
+              memory: 256Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
           env:
             - name: SPRING_DATASOURCE_URL
               valueFrom:
@@ -62,8 +87,8 @@ spec:
                 configMapKeyRef:
                   name: springboot-config
                   key: SPRING_DATASOURCE_USERNAME
-            - name: SPRING_DATASOURCE_PASSWORD
+            - name: SPRING_SQL_INIT_CONTINUE_ON_ERROR
               valueFrom:
-                secretKeyRef:
-                  name: springboot-app-secret
-                  key: MYSQL_ROOT_PASSWORD
+                configMapKeyRef:
+                  name: springboot-config
+                  key: SPRING_SQL_INIT_CONTINUE_ON_ERROR
