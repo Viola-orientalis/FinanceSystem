@@ -1,3 +1,4 @@
+
 USE testdb;
 
 CREATE TABLE IF NOT EXISTS member (
@@ -10,8 +11,9 @@ CREATE TABLE IF NOT EXISTS member (
 CREATE TABLE IF NOT EXISTS account (
   id BIGINT AUTO_INCREMENT PRIMARY KEY,
   account_number VARCHAR(20) NOT NULL,
-  owner_name VARCHAR(50) NOT NULL,
-  balance BIGINT DEFAULT 0
+  user_id VARCHAR(255) NOT NULL,
+  balance BIGINT DEFAULT 0,
+  FOREIGN KEY (user_id) REFERENCES member(userid)
 );
 
 CREATE TABLE IF NOT EXISTS `transaction` (
@@ -19,9 +21,14 @@ CREATE TABLE IF NOT EXISTS `transaction` (
   account_id BIGINT NOT NULL,
   type VARCHAR(10) NOT NULL,
   amount BIGINT NOT NULL,
+  balance_before BIGINT NOT NULL,
   balance_after BIGINT NOT NULL,
-  created_at DATETIME DEFAULT NOW()
+  created_at DATETIME DEFAULT NOW(),
+  FOREIGN KEY (account_id) REFERENCES account(id)
 );
 
-INSERT INTO account (account_number, owner_name, balance)
-VALUES ('123-456-789', 'Demo User', 1000000);
+INSERT INTO member (userid, password, username, role)
+VALUES ('user1', '1234', 'Demo User', 'USER');
+
+INSERT INTO account (account_number, user_id, balance)
+VALUES ('123-456-789', 'user1', 1000000);
