@@ -10,7 +10,7 @@ stringData:
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: mlysql-nfs-pv
+  name: mysql-nfs-pv
 spec:
   capacity:
     storage: 2Gi
@@ -69,6 +69,13 @@ spec:
           image: mysql:8.3
           ports:
             - containerPort: 3306
+          resources:
+            requests:
+              cpu: 250m
+              memory: 512Mi
+            limits:
+              cpu: 500m
+              memory: 1Gi
           env:
             - name: MYSQL_DATABASE
               value: testdb

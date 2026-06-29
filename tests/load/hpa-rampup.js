@@ -10,8 +10,8 @@ export const options = {
 };
 
 export default function () {
-  // 실제 서버 IP/도메인으로 변경 필요
-  const res = http.get('http://localhost:8080/home');
+  // 도커로 실행 시 host.docker.internal을 통해 호스트의 8080 포트로 접근
+  const res = http.get('http://host.docker.internal:8080/');
   
   check(res, {
     'is status 200': (r) => r.status === 200,
