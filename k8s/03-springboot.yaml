@@ -92,8 +92,3 @@ spec:
                 configMapKeyRef:
                   name: springboot-config
                   key: SPRING_SQL_INIT_CONTINUE_ON_ERROR
-            - name: SPRING_DATASOURCE_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: springboot-app-secret
-                  key: MYSQL_ROOT_PASSWORD
