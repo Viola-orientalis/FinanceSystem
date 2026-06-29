@@ -22,7 +22,7 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     @Transactional
-    public int signup(MemberDTO dto) {
+    public String signup(MemberDTO dto) {
 
         int result = memberMapper.signup(dto);
 
@@ -31,11 +31,10 @@ public class MemberServiceImpl implements MemberService {
 
         accountMapper.createAccount(
                 dto.getUserid(),
-                accountNumber,
-                dto.getUsername()
+                accountNumber
         );
 
-        return result;
+        return accountNumber;
     }
 
     @Override
