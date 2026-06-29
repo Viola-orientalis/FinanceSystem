@@ -1,57 +1,45 @@
-     # 02-mysql.yaml 
-  
 apiVersion: v1
 kind: Secret
 metadata:
-  name: mysql-secret
-  namespace: todo
+  name: mysql-db-secret
+  namespace: finance-db
 type: Opaque
 stringData:
   MYSQL_ROOT_PASSWORD: "1234"
-
 ---
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: mysql-pv-node1
+  name: mysql-nfs-pv
 spec:
   capacity:
     storage: 2Gi
   accessModes:
     - ReadWriteOnce
-  storageClassName: manual
+  storageClassName: nfs-manual
   persistentVolumeReclaimPolicy: Retain
-  local:
-    path: /data/mysql
-  nodeAffinity:
-    required:
-      nodeSelectorTerms:
-        - matchExpressions:
-            - key: kubernetes.io/hostname
-              operator: In
-              values:
-                - node1
-
+  nfs:
+    server: 172.16.8.20
+    path: /nfs/data/mysql
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: mysql-pvc
-  namespace: todo
+  namespace: finance-db
 spec:
   accessModes:
     - ReadWriteOnce
-  storageClassName: manual
+  storageClassName: nfs-manual
   resources:
     requests:
       storage: 2Gi
-
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: mysql-service
-  namespace: todo
+  namespace: finance-db
 spec:
   selector:
     app: mysql
@@ -59,13 +47,12 @@ spec:
     - port: 3306
       targetPort: 3306
   type: ClusterIP
-
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: mysql
-  namespace: todo
+  namespace: finance-db
 spec:
   replicas: 1
   selector:
@@ -76,19 +63,26 @@ spec:
       labels:
         app: mysql
     spec:
-      nodeName: node1
+      nodeName: node2
       containers:
         - name: mysql
           image: mysql:8.3
           ports:
             - containerPort: 3306
+          resources:
+            requests:
+              cpu: 250m
+              memory: 512Mi
+            limits:
+              cpu: 500m
+              memory: 1Gi
           env:
             - name: MYSQL_DATABASE
               value: testdb
             - name: MYSQL_ROOT_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: mysql-secret
+                  name: mysql-db-secret
                   key: MYSQL_ROOT_PASSWORD
           volumeMounts:
             - name: mysql-storage

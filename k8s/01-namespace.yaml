@@ -1,6 +1,12 @@
 # 01-namespace.yaml
-
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: todo
+  name: finance-app
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: finance-db
+  labels:
+    access-to-db: allowed
