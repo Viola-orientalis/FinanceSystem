@@ -10,12 +10,18 @@ export const options = {
 };
 
 export default function () {
-  // 도커로 실행 시 host.docker.internal을 통해 호스트의 8080 포트로 접근
-  const res = http.get('http://host.docker.internal:8080/');
-  
+  // 환경변수로 URL을 받거나, K8s Ingress 도메인(finance.local)을 기본값으로 사용
+  const baseUrl = 'http://172.16.8.12:32311';
+  const params = {
+    headers: {
+      'Host': 'finance.local',
+    },
+  };
+  const res = http.get(`${baseUrl}/`,params);
+
   check(res, {
     'is status 200': (r) => r.status === 200,
   });
-  
+
   sleep(1);
 }

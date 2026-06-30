@@ -2,6 +2,7 @@ import http from 'k6/http';
 import { check } from 'k6';
 
 export const options = {
+  maxRedirects: 0,
   scenarios: {
     spike_test: {
       executor: 'shared-iterations',
@@ -13,22 +14,27 @@ export const options = {
 };
 
 export default function () {
-  const url = 'http://localhost:8080/withdraw';
-  // 테스트용 데모 계좌 id와 1만원 출금 데이터
-  const payload = JSON.stringify({
-    accountId: 1,
-    amount: 10000,
-  });
+  const baseUrl = 'http://172.16.8.12:32311';
+  const url = `${baseUrl}/signup`;
+
+  // 중복 가입 에러 방지를 위해 VU, ITER 값과 타임스탬프를 조합하여 고유 ID 생성
+  const uniqueId = `user_${__VU}_${__ITER}_${Date.now()}`;
+
+  // x-www-form-urlencoded 형식으로 페이로드 구성 (Spring @ModelAttribute 매핑용)
+  const payload = `userid=${uniqueId}&password=1234&username=TestUser`;
 
   const params = {
     headers: {
-      'Content-Type': 'application/json',
+      'Host': 'finance.local',
+      'Content-Type': 'application/x-www-form-urlencoded',
     },
   };
 
   const res = http.post(url, payload, params);
-  
+
+  // 회원가입 성공 시 로그인 페이지로 리다이렉트(302) 후 로그인 페이지(200)가 로드됨
   check(res, {
-    'is status 200': (r) => r.status === 200,
+    'is status 302': (r) => r.status === 302,
   });
 }
+
