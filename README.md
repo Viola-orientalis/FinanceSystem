@@ -3,10 +3,11 @@
 1차 프로젝트
 
 ## 인프라 구조
-[master]  ── K8s Control Plane (master-node)
-[node1]   ── Spring Boot Pods (worker-node1)
-[node2]   ── Spring Boot Pods + MySQL Pod (worker-node2)
-[Storage] ── NFS 서버 (storage-node)
+
+- **[master]** ── K8s Control Plane (master-node)
+- **[node1]** ── Spring Boot Pods (worker-node1)
+- **[node2]** ── Spring Boot Pods + MySQL Pod (worker-node2)
+- **[Storage]** ── NFS 서버 (storage-node)
 
 ## 전체 실행 순서
 
