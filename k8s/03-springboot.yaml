@@ -15,7 +15,7 @@ metadata:
   namespace: todo-app
 type: Opaque
 stringData:
-  MYSQL_ROOT_PASSWORD: "1234"
+  MYSQL_ROOT_PASSWORD: "<password>"
 ---
 apiVersion: v1
 kind: Service
