@@ -52,7 +52,7 @@ spec:
     spec:
       containers:
         - name: springboot
-          image: cheongomabi/fs:2.0
+          image: cheongomabi/fs:4.0
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
