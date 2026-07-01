@@ -14,7 +14,7 @@ export const options = {
 };
 
 export default function () {
-  const baseUrl = 'http://172.16.8.12:32311';
+  const baseUrl = 'http://172.16.8.x:32311';
   const url = `${baseUrl}/signup`;
 
   // 중복 가입 에러 방지를 위해 VU, ITER 값과 타임스탬프를 조합하여 고유 ID 생성
