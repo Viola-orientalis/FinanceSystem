@@ -11,7 +11,7 @@ export const options = {
 
 export default function () {
   // 환경변수로 URL을 받거나, K8s Ingress 도메인(finance.local)을 기본값으로 사용
-  const baseUrl = 'http://172.16.8.12:32311';
+  const baseUrl = 'http://172.16.8.x:32311';
   const params = {
     headers: {
       'Host': 'finance.local',
