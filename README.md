@@ -1,6 +1,18 @@
 # FinanceSystem - K8s 기반 금융 서비스
-
 1차 프로젝트
+
+## 실행 전 설정
+
+아래 파일에서 `<password>`와 `storage-node`를 본인 환경 값으로 교체 후 실행하세요.
+
+| 파일 | 항목 | 교체할 값 |
+|---|---|---|
+| `k8s/02-mysql.yaml` | `MYSQL_ROOT_PASSWORD` | 실제 MySQL 비밀번호 |
+| `k8s/02-mysql.yaml` | `nfs.server` | NFS 서버 실제 IP |
+| `k8s/03-springboot.yaml` | `MYSQL_ROOT_PASSWORD` | 실제 MySQL 비밀번호 |
+| `docker-compose.yml` | `MYSQL_ROOT_PASSWORD` | 실제 MySQL 비밀번호 |
+| `src/main/resources/application.yml` | `password` | 실제 MySQL 비밀번호 |
+| `tests/load/hpa-rampup.js` | `baseUrl` | 실제 노드 IP와 NodePort |
 
 ## 인프라 구조
 
