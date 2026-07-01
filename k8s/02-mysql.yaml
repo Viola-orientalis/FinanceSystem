@@ -5,7 +5,7 @@ metadata:
   namespace: todo-db
 type: Opaque
 stringData:
-  MYSQL_ROOT_PASSWORD: "1234"
+  MYSQL_ROOT_PASSWORD: "<password>"
 ---
 apiVersion: v1
 kind: PersistentVolume
@@ -19,7 +19,7 @@ spec:
   storageClassName: nfs-manual
   persistentVolumeReclaimPolicy: Retain
   nfs:
-    server: 172.16.8.20
+    server: storage-node
     path: /nfs/data/mysql
 ---
 apiVersion: v1
