@@ -1,5 +1,4 @@
 #spring.application.name=demo
-
 spring:
   application:
     name: demo
@@ -11,28 +10,20 @@ spring:
 #    url: jdbc:mysql://localhost:3306/testdb
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
-    password: 1234
-
-  #schema.sql 과 data.sql 관리 가능 ( always|never )
+    password: "<password>"
   sql:
     init:
       mode: always
-#      schema-locations: classpath:schema.sql
-#      data-locations: classpath:data.sql
-
-  # /ccc/**/ddd 사용시 ** 허용
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
-        
+
 mybatis:
-#  mapper-locations: classpath:com/exam/mapper/TodoMapper.xml
   mapper-locations: classpath:com/exam/mapper/*.xml
   type-aliases-package: com.exam.dto
   configuration:
     map-underscore-to-camel-case: true
 
-# 개발단계에서 SQL 확인
 logging:
   level:
-    com.exam.mapper:  DEBUG
+    com.exam.mapper: DEBUG
