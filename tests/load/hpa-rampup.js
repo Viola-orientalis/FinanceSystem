@@ -10,18 +10,16 @@ export const options = {
 };
 
 export default function () {
-  // 환경변수로 URL을 받거나, K8s Ingress 도메인(finance.local)을 기본값으로 사용
-  const baseUrl = 'http://172.16.8.x:32311';
+  // 실행 전 본인 환경의 노드 IP와 NodePort로 변경하세요
+  const baseUrl = 'http://<노드IP>:<NodePort>';
   const params = {
     headers: {
       'Host': 'finance.local',
     },
   };
-  const res = http.get(`${baseUrl}/`,params);
-
+  const res = http.get(`${baseUrl}/`, params);
   check(res, {
     'is status 200': (r) => r.status === 200,
   });
-
   sleep(1);
 }
