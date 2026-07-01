@@ -1,12 +1,11 @@
 version: '3.8'
-
 services:
   # MySQL 데이터베이스 컨테이너
   mysql-service:
     image: mysql:8.0
     container_name: finance-mysql
     environment:
-      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_ROOT_PASSWORD: "<password>"
       MYSQL_DATABASE: testdb
       TZ: Asia/Seoul
     ports:
@@ -17,17 +16,15 @@ services:
       - --character-set-server=utf8mb4
       - --collation-server=utf8mb4_unicode_ci
   backend:
-    build: . # 현재 폴더에 있는 Dockerfile을 사용해 빌드합니다.
+    build: .
     container_name: finance-backend
-    restart: on-failure # DB가 늦게 켜져서 실패해도 알아서 다시 재시도합니다.
+    restart: on-failure
     ports:
-      - "8080:8080" # application.yml 기본 포트
+      - "8080:8080"
     depends_on:
       - mysql-service
     environment:
-      # 도커 네트워크 안에서는 localhost 대신 서비스 이름(mysql-service)을 씁니다.
       TZ: Asia/Seoul
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql-service:3306/testdb?serverTimezone=Asia/Seoul&characterEncoding=UTF-8&allowPublicKeyRetrieval=true&useSSL=false
-
 volumes:
-  db_data: # DB 데이터가 날아가지 않도록 저장하는 볼륨
+  db_data:
